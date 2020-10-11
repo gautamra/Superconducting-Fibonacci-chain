@@ -116,7 +116,11 @@ class TBmodel:
         err_Delta = np.ones(1)
         cc = 0
         
-        while any([err/Del>0.001 for err,Del in zip(err_Delta, self.Delta)]):
+        while any([Del>10**(-10) and err/Del>0.001 for err,Del in zip(err_Delta, self.Delta)]):
+#             fig, ax = plt.subplots()
+#             ax.plot(self.Delta)
+#             ax2 = ax.twinx()
+#             ax2.plot(err_Delta)
             H = self.fsyst.hamiltonian_submatrix(params = dict(Delta = self.Delta, Pot = self.Pot))
             newDelta, newPot = self_cons(H)
             err_Delta = np.abs(newDelta - self.Delta)
