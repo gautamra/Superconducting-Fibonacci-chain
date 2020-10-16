@@ -258,6 +258,26 @@ class Fibonacci_sequence:
         self.perp_ordering = np.mod(ordering, Fibonacci_number[self.n])
         return self.perp_ordering
         
-  
-
-
+        
+class DOS_SC:
+    def __init__(self, eex, DOS):
+        self.eex = eex
+        self.DOS = DOS
+        
+        self.zeroindex = np.argmin(abs(self.eex))
+        
+    
+    def find_coherence_peak(self):
+        i = self.zeroindex
+        while self.DOS[i-1]>self.DOS[i] or self.DOS[i+1]>self.DOS[i]:
+            i += 1
+        self.rightPeakIndex = i
+        
+        i = self.zeroindex
+        while self.DOS[i-1]>self.DOS[i] or self.DOS[i+1]>self.DOS[i]:
+            i += -1
+        self.leftPeakIndex = i
+        
+        self.leftPeakHeight = self.DOS[self.leftPeakIndex]
+        self.rightPeakHeight = self.DOS[self.rightPeakIndex]
+        self.gapWidth = self.eex[self.rightPeakIndex] - self.eex[self.leftPeakIndex]
